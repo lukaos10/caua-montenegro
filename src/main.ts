@@ -24,7 +24,9 @@ function renderSpaces(list: HTMLElement) {
     const button = document.createElement("button")
     button.type = "button"
     button.id = `espaco-${space.id}`
-    button.className = cardClass
+    button.className = `${cardClass} reveal`
+    button.dataset.reveal = ""
+    button.dataset.revealDelay = String(spaces.indexOf(space))
     button.addEventListener("click", () => openGallery(space))
 
     const image = document.createElement("img")
@@ -73,9 +75,10 @@ function openGallery(space: Space) {
   summary.textContent = space.summary
   grid.replaceChildren()
 
-  for (const image of space.images) {
+  space.images.forEach((image, index) => {
     const figure = document.createElement("figure")
-    figure.className = "overflow-hidden rounded-box bg-base-300"
+    figure.className = "reveal overflow-hidden rounded-box bg-base-300"
+    figure.style.transitionDelay = `${index * 70}ms`
     const img = document.createElement("img")
     img.src = image.src
     img.alt = image.alt
@@ -84,10 +87,15 @@ function openGallery(space: Space) {
     img.className = "aspect-3/4 w-full object-cover"
     figure.append(img)
     grid.append(figure)
-  }
+  })
 
   box?.scrollTo(0, 0)
   if (!dialog.open) dialog.showModal()
+  requestAnimationFrame(() => {
+    grid.querySelectorAll("figure").forEach((figure) => {
+      if (figure instanceof HTMLElement) figure.dataset.revealed = "true"
+    })
+  })
 }
 
 function fillSelect(select: HTMLSelectElement, values: string[]) {
@@ -142,7 +150,10 @@ function setupIntro() {
   const sync = () => {
     intro.inert = skip.checked
     intro.setAttribute("aria-hidden", String(skip.checked))
-    if (skip.checked) document.querySelector<HTMLElement>("#inicio")?.focus()
+    if (skip.checked) {
+      document.querySelector<HTMLElement>("#inicio")?.focus()
+      document.dispatchEvent(new Event("intro:done"))
+    }
   }
 
   skip.addEventListener("change", sync)
@@ -232,6 +243,48 @@ function setupInstagramLinks() {
   })
 }
 
+function setupReveal() {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  let started = false
+
+  const start = () => {
+    if (started) return
+    started = true
+    const items = [...document.querySelectorAll<HTMLElement>("[data-reveal]")]
+    if (reduce) {
+      items.forEach((item) => {
+        item.dataset.revealed = "true"
+      })
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          const item = entry.target as HTMLElement
+          item.dataset.revealed = "true"
+          observer.unobserve(item)
+        }
+      },
+      { threshold: 0.18, rootMargin: "0px 0px -8% 0px" },
+    )
+
+    items.forEach((item) => {
+      const step = Number(item.dataset.revealDelay ?? "0")
+      if (step > 0) item.style.transitionDelay = `${step * 90}ms`
+      observer.observe(item)
+    })
+  }
+
+  const skip = document.querySelector<HTMLInputElement>("#skip-intro")
+  if (!skip || skip.checked) {
+    start()
+    return
+  }
+  document.addEventListener("intro:done", start, { once: true })
+}
+
 setupIntro()
 setupDrawer()
 setupContact()
@@ -239,3 +292,4 @@ setupInstagramLinks()
 
 const spaceList = document.querySelector<HTMLElement>("#espacos-lista")
 if (spaceList) renderSpaces(spaceList)
+setupReveal()

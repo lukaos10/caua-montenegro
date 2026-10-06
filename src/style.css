@@ -45,3 +45,55 @@
   --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
 }
+
+@utility reveal {
+  opacity: 0;
+  translate: 0 1.6rem;
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    translate 800ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-revealed="true"] {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
+  }
+}
+
+@utility reveal-fade {
+  opacity: 0;
+  transition: opacity 700ms ease;
+
+  &[data-revealed="true"] {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+@utility rise-in {
+  animation: rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 1.25rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
