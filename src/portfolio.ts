@@ -42,10 +42,10 @@ export const spaces: Space[] = [
     title: "Eventos",
     summary: "Cobertura de presença, palco e bastidor, pronta para as redes.",
     images: [
-      photo("photo-1492684223066-81342ee5ff30", "Foto de exemplo: público em um evento"),
-      photo("photo-1540575467063-178a50c2df87", "Foto de exemplo: plateia em um auditório"),
-      photo("photo-1511578314322-379afb476865", "Foto de exemplo: salão preparado para evento"),
-      photo("photo-1429962714451-bb934ecdc4ec", "Foto de exemplo: show com luzes"),
+      photo("photo-1492684223066-81342ee5ff30", "Foto fictícia: público em um evento"),
+      photo("photo-1540575467063-178a50c2df87", "Foto fictícia: plateia em um auditório"),
+      photo("photo-1511578314322-379afb476865", "Foto fictícia: salão preparado para evento"),
+      photo("photo-1429962714451-bb934ecdc4ec", "Foto fictícia: show com luzes"),
     ],
   },
   {
@@ -54,10 +54,10 @@ export const spaces: Space[] = [
     title: "Conteúdo",
     summary: "Peças curtas pensadas para o celular: ritmo, fala e corte.",
     images: [
-      photo("photo-1516035069371-29a1b244cc32", "Foto de exemplo: câmera em close"),
-      photo("photo-1492691527719-9d1e07e534b4", "Foto de exemplo: pessoa filmando"),
-      photo("photo-1478720568477-152d9b164e26", "Foto de exemplo: sala de cinema"),
-      photo("photo-1485846234645-a62644f84728", "Foto de exemplo: set de filmagem"),
+      photo("photo-1516035069371-29a1b244cc32", "Foto fictícia: câmera em close"),
+      photo("photo-1492691527719-9d1e07e534b4", "Foto fictícia: pessoa filmando"),
+      photo("photo-1478720568477-152d9b164e26", "Foto fictícia: sala de cinema"),
+      photo("photo-1485846234645-a62644f84728", "Foto fictícia: set de filmagem"),
     ],
   },
   {
@@ -66,10 +66,10 @@ export const spaces: Space[] = [
     title: "Comercial",
     summary: "Comunicação visual para marcas que precisam aparecer.",
     images: [
-      photo("photo-1441986300917-64674bd600d8", "Foto de exemplo: vitrine de loja"),
-      photo("photo-1523275335684-37898b6baf30", "Foto de exemplo: produto em fundo limpo"),
-      photo("photo-1542744173-8e7e53415bb0", "Foto de exemplo: equipe em reunião"),
-      photo("photo-1556742049-0cfed4f6a45d", "Foto de exemplo: atendimento em balcão"),
+      photo("photo-1441986300917-64674bd600d8", "Foto fictícia: vitrine de loja"),
+      photo("photo-1523275335684-37898b6baf30", "Foto fictícia: produto em fundo limpo"),
+      photo("photo-1542744173-8e7e53415bb0", "Foto fictícia: equipe em reunião"),
+      photo("photo-1556742049-0cfed4f6a45d", "Foto fictícia: atendimento em balcão"),
     ],
   },
   {
@@ -78,10 +78,10 @@ export const spaces: Space[] = [
     title: "Casamentos",
     summary: "O dia, os detalhes e as pessoas, com cara de filme curto.",
     images: [
-      photo("photo-1519741497674-611481863552", "Foto de exemplo: casamento ao ar livre"),
-      photo("photo-1511285560929-80b456fea0bc", "Foto de exemplo: casal em celebração"),
-      photo("photo-1465495976277-4387d4b0b4c6", "Foto de exemplo: mesa de casamento"),
-      photo("photo-1520854221256-17451cc331bf", "Foto de exemplo: pista de dança"),
+      photo("photo-1519741497674-611481863552", "Foto fictícia: casamento ao ar livre"),
+      photo("photo-1511285560929-80b456fea0bc", "Foto fictícia: casal em celebração"),
+      photo("photo-1465495976277-4387d4b0b4c6", "Foto fictícia: mesa de casamento"),
+      photo("photo-1520854221256-17451cc331bf", "Foto fictícia: pista de dança"),
     ],
   },
   {
@@ -90,10 +90,10 @@ export const spaces: Space[] = [
     title: "Aniversários",
     summary: "Festas e encontros com registro leve, direto para publicar.",
     images: [
-      photo("photo-1530103862676-de8c9debad1d", "Foto de exemplo: festa de aniversário"),
-      photo("photo-1464349095431-e9a21285b5f3", "Foto de exemplo: bolo de aniversário"),
-      photo("photo-1513151233558-d860c5398176", "Foto de exemplo: confete em festa"),
-      photo("photo-1527529482837-4698179dc6ce", "Foto de exemplo: pessoas em uma festa"),
+      photo("photo-1530103862676-de8c9debad1d", "Foto fictícia: festa de aniversário"),
+      photo("photo-1464349095431-e9a21285b5f3", "Foto fictícia: bolo de aniversário"),
+      photo("photo-1513151233558-d860c5398176", "Foto fictícia: confete em festa"),
+      photo("photo-1527529482837-4698179dc6ce", "Foto fictícia: pessoas em uma festa"),
     ],
   },
 ]

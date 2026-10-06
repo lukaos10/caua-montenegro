@@ -53,7 +53,7 @@ function renderSpaces(list: HTMLElement) {
 
     const hint = document.createElement("span")
     hint.className = "text-sm text-white/80"
-    hint.textContent = "Toque para ver fotos"
+    hint.textContent = "Fotos fictícias. Espaço para os trabalhos do Cauã."
 
     copy.append(index, title, hint)
     button.append(image, shade, copy)
