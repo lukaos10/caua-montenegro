@@ -1,8 +1,10 @@
 export const INSTAGRAM_URL = "https://instagram.com/cauamontenegroo"
 export const LINKTREE_URL = "https://linktr.ee/cauamontenegroo"
 
-/** Número com DDI, só dígitos. Ex.: 5585999999999. Vazio abre o Linktree. */
-export const WHATSAPP_E164 = ""
+/** Número com DDI, só dígitos. */
+export const WHATSAPP_E164 = "558597063967"
+export const WHATSAPP_DISPLAY = "+55 85 9706-3967"
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_E164}`
 
 export type GalleryImage = {
   src: string

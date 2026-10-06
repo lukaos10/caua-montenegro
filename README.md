@@ -16,7 +16,7 @@ npm run dev
 
 ## WhatsApp
 
-O formulário copia o briefing. Sem número, ele abre o Linktree. Para abrir o WhatsApp direto, preencha `WHATSAPP_E164` em `src/portfolio.ts` só com dígitos, incluindo DDI. Exemplo: `5585999999999`.
+O botão e o formulário abrem `https://wa.me/558597063967` (+55 85 9706-3967). O número fica em `WHATSAPP_E164`, dentro de `src/portfolio.ts`.
 
 ## Trocar as fotos
 

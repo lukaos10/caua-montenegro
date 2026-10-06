@@ -4,7 +4,9 @@ import {
   INSTAGRAM_URL,
   LINKTREE_URL,
   spaces,
+  WHATSAPP_DISPLAY,
   WHATSAPP_E164,
+  WHATSAPP_URL,
   type BriefingFields,
   type Space,
 } from "./portfolio.ts"
@@ -223,6 +225,10 @@ function setupInstagramLinks() {
   })
   document.querySelectorAll<HTMLAnchorElement>("[data-linktree]").forEach((link) => {
     link.href = LINKTREE_URL
+  })
+  document.querySelectorAll<HTMLAnchorElement>("[data-whatsapp]").forEach((link) => {
+    link.href = WHATSAPP_URL
+    if (link.hasAttribute("data-whatsapp-label")) link.textContent = WHATSAPP_DISPLAY
   })
 }
 
