@@ -150,10 +150,7 @@ function setupIntro() {
   const sync = () => {
     intro.inert = skip.checked
     intro.setAttribute("aria-hidden", String(skip.checked))
-    if (skip.checked) {
-      document.querySelector<HTMLElement>("#inicio")?.focus()
-      document.dispatchEvent(new Event("intro:done"))
-    }
+    if (skip.checked) document.dispatchEvent(new Event("intro:done"))
   }
 
   skip.addEventListener("change", sync)
