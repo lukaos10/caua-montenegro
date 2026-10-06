@@ -12,7 +12,7 @@ import {
 } from "./portfolio.ts"
 
 const cardClass = [
-  "group relative h-[70vh] min-h-[28rem] w-[82vw] shrink-0 snap-start scroll-mt-28",
+  "group relative h-[70vh] min-h-80 w-[min(82%,24rem)] shrink-0 snap-start scroll-mt-28",
   "overflow-hidden rounded-box text-left sm:w-[28rem]",
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-base-content",
 ].join(" ")

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR" data-theme="cinema" class="scroll-smooth motion-reduce:scroll-auto">
+<html lang="pt-BR" data-theme="cinema" class="overflow-x-clip scroll-smooth motion-reduce:scroll-auto">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -17,22 +17,22 @@
     />
     <title>Cauã Montenegro — Videomaker</title>
   </head>
-  <body class="font-sans antialiased">
+  <body class="overflow-x-clip font-sans antialiased">
     <div class="drawer drawer-end">
       <input id="nav-drawer" type="checkbox" class="drawer-toggle" />
       <div class="drawer-content">
         <input id="skip-intro" type="checkbox" class="peer hidden" />
         <div
           id="intro"
-          class="fixed inset-0 z-50 flex flex-col bg-base-100 p-6 transition-opacity duration-700 peer-checked:pointer-events-none peer-checked:opacity-0 md:p-10"
+          class="fixed inset-0 z-50 flex flex-col overflow-x-clip bg-base-100 p-6 transition-opacity duration-700 peer-checked:pointer-events-none peer-checked:opacity-0 md:p-10"
         >
           <p class="rise-in text-xs tracking-[0.35em] text-base-content/70 uppercase">Cena 01</p>
           <div class="flex flex-1 items-center">
             <p class="rise-in text-[clamp(4.5rem,18vw,12rem)] leading-none font-medium tracking-[-0.06em] [animation-delay:140ms]">CAUÃ</p>
           </div>
-          <div class="rise-in flex items-end justify-between gap-4 [animation-delay:260ms]">
+          <div class="rise-in flex w-full min-w-0 items-end justify-between gap-4 [animation-delay:260ms]">
             <label for="skip-intro" class="btn">Pular para o conteúdo</label>
-            <p id="intro-count" class="text-5xl font-medium tabular-nums md:text-7xl">00</p>
+            <p id="intro-count" class="text-4xl font-medium tabular-nums md:text-7xl">00</p>
           </div>
         </div>
 
@@ -53,10 +53,10 @@
           </div>
         </header>
 
-        <main>
+        <main class="min-w-0">
           <section id="inicio" class="mx-auto max-w-6xl scroll-mt-24 px-6 pt-16 pb-20 md:px-10 md:pt-24">
             <p class="reveal text-xs tracking-[0.32em] text-base-content/70 uppercase" data-reveal data-reveal-delay="1">Videomaker · Creator mobile · Comunicação</p>
-            <h1 class="reveal mt-6 text-[clamp(4.2rem,13vw,9.5rem)] leading-[0.84] font-medium tracking-[-0.05em]" data-reveal data-reveal-delay="2">
+            <h1 class="reveal mt-6 max-w-full text-[clamp(2.5rem,11vw,9.5rem)] leading-[0.84] font-medium tracking-[-0.05em]" data-reveal data-reveal-delay="2">
               CAUÃ<br />MONTENEGRO
             </h1>
             <p class="reveal mt-8 max-w-xl text-xl leading-snug text-base-content/80 md:text-2xl" data-reveal data-reveal-delay="3">
@@ -73,7 +73,7 @@
             </div>
           </section>
 
-          <section id="espacos" class="scroll-mt-24 pb-20">
+          <section id="espacos" class="min-w-0 scroll-mt-24 pb-20">
             <div class="reveal mx-auto flex max-w-6xl flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between md:px-10" data-reveal>
               <div>
                 <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Portfólio</p>
@@ -91,14 +91,14 @@
               <a class="link link-hover" href="#espaco-casamentos">Casamentos</a>
               <a class="link link-hover" href="#espaco-aniversarios">Aniversários</a>
             </div>
-            <div id="espacos-lista" class="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-clip px-6 pb-4 md:px-10"></div>
+            <div id="espacos-lista" class="mt-8 flex w-full min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-clip px-6 pb-4 md:px-10"></div>
           </section>
 
           <section id="sobre" class="scroll-mt-24 border-t border-base-300">
             <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:px-10 lg:grid-cols-2 lg:py-28">
               <div class="reveal" data-reveal>
                 <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Perfil</p>
-                <h2 class="mt-4 text-5xl leading-[0.9] font-medium tracking-tight md:text-7xl">
+                <h2 class="mt-4 max-w-full text-[clamp(2.5rem,11vw,7rem)] leading-[0.9] font-medium tracking-tight">
                   CAUÃ<br />MONTENEGRO
                 </h2>
               </div>
