@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="cinema" class="scroll-smooth motion-reduce:scroll-auto">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cauã Montenegro, videomaker e creator mobile. Eventos, conteúdo, comerciais, casamentos e aniversários."
+    />
+    <meta name="theme-color" content="#161411" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <title>Cauã Montenegro — Videomaker</title>
+  </head>
+  <body class="font-sans antialiased">
+    <div class="drawer drawer-end">
+      <input id="nav-drawer" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content">
+        <input id="skip-intro" type="checkbox" class="peer hidden" />
+        <div
+          id="intro"
+          class="fixed inset-0 z-50 flex flex-col bg-base-100 p-6 transition-opacity duration-700 peer-checked:pointer-events-none peer-checked:opacity-0 md:p-10"
+        >
+          <p class="text-xs tracking-[0.35em] text-base-content/70 uppercase">Cena 01</p>
+          <div class="flex flex-1 items-center">
+            <p class="text-[clamp(4.5rem,18vw,12rem)] leading-none font-medium tracking-[-0.06em]">CAUÃ</p>
+          </div>
+          <div class="flex items-end justify-between gap-4">
+            <label for="skip-intro" class="btn">Pular para o conteúdo</label>
+            <p id="intro-count" class="text-5xl font-medium tabular-nums md:text-7xl">00</p>
+          </div>
+        </div>
+
+        <header class="navbar sticky top-0 z-30 border-b border-base-300 bg-base-200/90 px-4 backdrop-blur-md md:px-8">
+          <div class="navbar-start">
+            <a href="#inicio" class="text-sm font-semibold tracking-[0.28em]">CAUÃ</a>
+          </div>
+          <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+              <li><a href="#espacos">Portfólio</a></li>
+              <li><a href="#sobre">Sobre</a></li>
+              <li><a href="#contato">Contato</a></li>
+            </ul>
+          </div>
+          <div class="navbar-end gap-2">
+            <a href="#contato" class="btn btn-sm btn-primary">Orçamento</a>
+            <label for="nav-drawer" class="btn drawer-button lg:hidden">Menu</label>
+          </div>
+        </header>
+
+        <main>
+          <section id="inicio" tabindex="-1" class="mx-auto max-w-6xl scroll-mt-24 px-6 pt-16 pb-20 md:px-10 md:pt-24">
+            <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Videomaker · Creator mobile · Comunicação</p>
+            <h1 class="mt-6 text-[clamp(4.2rem,13vw,9.5rem)] leading-[0.84] font-medium tracking-[-0.05em]">
+              CAUÃ<br />MONTENEGRO
+            </h1>
+            <p class="mt-8 max-w-xl text-xl leading-snug text-base-content/80 md:text-2xl">
+              Vídeo e conteúdo para marcas, eventos e pessoas que querem ser vistas.
+            </p>
+            <div class="mt-10 flex flex-wrap items-center gap-3">
+              <a href="#espacos" class="btn">Portfólio</a>
+              <a class="btn" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            </div>
+          </section>
+
+          <section id="espacos" class="scroll-mt-24 pb-20">
+            <div class="mx-auto flex max-w-6xl flex-col gap-6 px-6 md:flex-row md:items-end md:justify-between md:px-10">
+              <div>
+                <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Portfólio</p>
+                <h2 class="mt-3 text-4xl font-medium tracking-tight md:text-6xl">ESPAÇOS</h2>
+              </div>
+              <p class="max-w-sm text-sm leading-relaxed text-base-content/70">
+                As fotos são referência visual deste site teste. Os trabalhos do Cauã estão no Instagram, nos destaques
+                Eventos, Conteúdo, Comercial, Casamentos e Aniversários.
+              </p>
+            </div>
+            <div class="mx-auto mt-6 flex max-w-6xl flex-wrap gap-x-5 gap-y-2 px-6 text-sm md:px-10">
+              <a class="link link-hover" href="#espaco-eventos">Eventos</a>
+              <a class="link link-hover" href="#espaco-conteudo">Conteúdo</a>
+              <a class="link link-hover" href="#espaco-comercial">Comercial</a>
+              <a class="link link-hover" href="#espaco-casamentos">Casamentos</a>
+              <a class="link link-hover" href="#espaco-aniversarios">Aniversários</a>
+            </div>
+            <div id="espacos-lista" class="mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:px-10"></div>
+          </section>
+
+          <section id="sobre" class="scroll-mt-24 border-t border-base-300">
+            <div class="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:px-10 lg:grid-cols-2 lg:py-28">
+              <div>
+                <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Perfil</p>
+                <h2 class="mt-4 text-5xl leading-[0.9] font-medium tracking-tight md:text-7xl">
+                  CAUÃ<br />MONTENEGRO
+                </h2>
+              </div>
+              <div class="flex flex-col gap-6 text-lg leading-relaxed text-base-content/80">
+                <p>
+                  Videomaker e creator mobile. Faz comunicação visual para eventos, casamentos, aniversários, conteúdo
+                  e peças comerciais — do briefing ao corte final.
+                </p>
+                <p class="font-serif text-3xl leading-snug text-base-content italic md:text-4xl">
+                  A prioridade é o resultado que chega para o cliente.
+                </p>
+                <ul class="flex flex-col gap-2 text-base">
+                  <li>Base de trabalho: conteúdo para redes e cobertura presencial</li>
+                  <li>Para marcas, festas, casamentos e comunicação</li>
+                  <li>
+                    Instagram
+                    <a class="link link-hover" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">@cauamontenegroo</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="servicos" class="scroll-mt-24 border-t border-base-300">
+            <div class="mx-auto max-w-6xl px-6 py-20 md:px-10 lg:py-28">
+              <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Oferta</p>
+              <h2 class="mt-3 text-4xl font-medium tracking-tight md:text-6xl">SERVIÇOS</h2>
+              <ol class="mt-12">
+                <li class="grid gap-4 border-t border-base-300 py-8 md:grid-cols-12">
+                  <p class="text-sm tracking-[0.22em] text-base-content/70 md:col-span-2">01</p>
+                  <h3 class="text-3xl font-medium tracking-tight md:col-span-4">Conteúdo mobile</h3>
+                  <p class="text-base-content/80 md:col-span-6">
+                    Reels, stories e peças curtas. Captação e edição pensadas para o celular e para o jeito de assistir nas redes.
+                  </p>
+                </li>
+                <li class="grid gap-4 border-t border-base-300 py-8 md:grid-cols-12">
+                  <p class="text-sm tracking-[0.22em] text-base-content/70 md:col-span-2">02</p>
+                  <h3 class="text-3xl font-medium tracking-tight md:col-span-4">Eventos</h3>
+                  <p class="text-base-content/80 md:col-span-6">
+                    Casamentos, aniversários e coberturas. O registro sai com cara de filme curto e pronto para publicar.
+                  </p>
+                </li>
+                <li class="grid gap-4 border-t border-b border-base-300 py-8 md:grid-cols-12">
+                  <p class="text-sm tracking-[0.22em] text-base-content/70 md:col-span-2">03</p>
+                  <h3 class="text-3xl font-medium tracking-tight md:col-span-4">Comercial</h3>
+                  <p class="text-base-content/80 md:col-span-6">
+                    Vídeo e comunicação visual para marcas, lojas e projetos que precisam ser vistos.
+                  </p>
+                </li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="border-t border-base-300">
+            <div class="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-20 md:flex-row md:items-end md:justify-between md:px-10">
+              <div>
+                <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Mais trabalhos</p>
+                <h2 class="mt-3 max-w-xl text-4xl leading-tight font-medium tracking-tight md:text-5xl">
+                  O restante do portfólio está no Instagram.
+                </h2>
+              </div>
+              <a class="btn" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">
+                Abrir Instagram
+              </a>
+            </div>
+          </section>
+
+          <section id="contato" class="scroll-mt-24 border-t border-base-300">
+            <div class="mx-auto grid max-w-6xl gap-12 px-6 py-20 md:px-10 lg:grid-cols-2 lg:py-28">
+              <div class="lg:sticky lg:top-28 lg:self-start">
+                <p class="text-xs tracking-[0.32em] text-base-content/70 uppercase">Contato</p>
+                <h2 class="mt-4 text-4xl leading-[0.95] font-medium tracking-tight md:text-6xl">
+                  VAMOS FALAR DO SEU PRÓXIMO VÍDEO
+                </h2>
+                <ul class="mt-8 flex flex-col gap-3 text-base">
+                  <li>
+                    Instagram
+                    <a class="link link-hover" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">@cauamontenegroo</a>
+                  </li>
+                  <li>
+                    Orçamentos
+                    <a class="link link-hover" data-linktree href="https://linktr.ee/cauamontenegroo" target="_blank" rel="noopener noreferrer">linktr.ee/cauamontenegroo</a>
+                  </li>
+                </ul>
+              </div>
+
+              <form id="briefing" class="grid content-start gap-1">
+                <p class="mb-2 text-xs tracking-[0.28em] text-base-content/70 uppercase">Briefing</p>
+                <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Nome</legend>
+                  <input class="input w-full" type="text" name="nome" autocomplete="name" required />
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Empresa ou marca</legend>
+                  <input class="input w-full" type="text" name="marca" autocomplete="organization" />
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Tipo de projeto</legend>
+                  <select class="select w-full" name="tipo" required>
+                    <option value="" selected disabled>Selecione</option>
+                    <option>Conteúdo para redes</option>
+                    <option>Cobertura de evento</option>
+                    <option>Casamento</option>
+                    <option>Aniversário</option>
+                    <option>Comercial</option>
+                    <option>Outro</option>
+                  </select>
+                </fieldset>
+                <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Prazo</legend>
+                  <input class="input w-full" type="text" name="prazo" placeholder="Ex.: daqui a 20 dias" />
+                </fieldset>
+                <p class="fieldset-legend mt-2">Melhor horário para call</p>
+                <div class="grid gap-2 sm:grid-cols-3">
+                  <fieldset class="fieldset">
+                    <legend class="fieldset-legend">Dia da semana</legend>
+                    <select class="select w-full" name="diaSemana">
+                      <option value="">Selecione</option>
+                      <option>Segunda</option>
+                      <option>Terça</option>
+                      <option>Quarta</option>
+                      <option>Quinta</option>
+                      <option>Sexta</option>
+                      <option>Sábado</option>
+                      <option>Domingo</option>
+                    </select>
+                  </fieldset>
+                  <fieldset class="fieldset">
+                    <legend class="fieldset-legend">Dia do mês</legend>
+                    <select id="dia-mes" class="select w-full" name="diaMes">
+                      <option value="">Selecione</option>
+                    </select>
+                  </fieldset>
+                  <fieldset class="fieldset">
+                    <legend class="fieldset-legend">Horário</legend>
+                    <select id="horario" class="select w-full" name="horario">
+                      <option value="">Selecione</option>
+                    </select>
+                  </fieldset>
+                </div>
+                <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Conte o projeto</legend>
+                  <textarea class="textarea min-h-32 w-full" name="projeto" required></textarea>
+                </fieldset>
+                <button class="btn mt-4" type="submit">Enviar no WhatsApp</button>
+                <p id="contato-aviso" class="mt-2 text-sm leading-relaxed text-base-content/70"></p>
+                <p id="briefing-status" class="text-sm" role="status"></p>
+                <textarea id="briefing-copia" class="textarea mt-2 w-full" rows="8" readonly hidden></textarea>
+              </form>
+            </div>
+          </section>
+        </main>
+
+        <footer class="footer sm:footer-horizontal border-t border-base-300 bg-base-200 px-6 py-10 md:px-10">
+          <nav>
+            <h2 class="footer-title">Cauã Montenegro</h2>
+            <a class="link link-hover" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a class="link link-hover" data-linktree href="https://linktr.ee/cauamontenegroo" target="_blank" rel="noopener noreferrer">Linktree</a>
+          </nav>
+          <nav>
+            <h2 class="footer-title">Site</h2>
+            <a class="link link-hover" href="#espacos">Portfólio</a>
+            <a class="link link-hover" href="#sobre">Sobre</a>
+            <a class="link link-hover" href="#contato">Contato</a>
+          </nav>
+          <nav>
+            <h2 class="footer-title">Nota</h2>
+            <p>© 2026 Cauã Montenegro</p>
+            <p>Fotos de exemplo via Unsplash. Site de apresentação.</p>
+          </nav>
+        </footer>
+
+        <dialog id="galeria" class="modal">
+          <div class="modal-box relative w-11/12 max-w-5xl!">
+            <form method="dialog">
+              <button class="btn btn-sm btn-circle absolute top-3 right-3 z-10" aria-label="Fechar">✕</button>
+            </form>
+            <p class="text-xs tracking-[0.28em] text-base-content/70 uppercase">Galeria</p>
+            <h3 id="galeria-titulo" class="mt-2 text-4xl font-medium tracking-tight"></h3>
+            <p id="galeria-texto" class="mt-3 max-w-xl text-base-content/80"></p>
+            <p class="mt-4 text-sm text-base-content/70">Fotos de exemplo. Os vídeos reais estão no Instagram.</p>
+            <div id="galeria-grid" class="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3"></div>
+            <div class="modal-action">
+              <a class="btn" data-instagram href="https://instagram.com/cauamontenegroo" target="_blank" rel="noopener noreferrer">Ver no Instagram</a>
+              <form method="dialog">
+                <button class="btn">Fechar</button>
+              </form>
+            </div>
+          </div>
+          <form method="dialog" class="modal-backdrop">
+            <button>fechar</button>
+          </form>
+        </dialog>
+      </div>
+
+      <div class="drawer-side z-40">
+        <label for="nav-drawer" aria-label="Fechar menu" class="drawer-overlay"></label>
+        <ul class="menu min-h-full w-80 bg-base-200 p-6 text-lg">
+          <li class="menu-title">Navegar</li>
+          <li><a href="#espacos" data-close-drawer>Portfólio</a></li>
+          <li><a href="#sobre" data-close-drawer>Sobre</a></li>
+          <li><a href="#contato" data-close-drawer>Contato</a></li>
+        </ul>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
