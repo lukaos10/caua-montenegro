@@ -227,6 +227,18 @@ function setupContact() {
   })
 }
 
+function setupPortrait() {
+  const img = document.querySelector<HTMLImageElement>("[data-portrait]")
+  const label = document.querySelector<HTMLElement>("[data-portrait-label]")
+  if (!img || !label) return
+  img.addEventListener("load", () => {
+    if (!img.naturalWidth) return
+    img.classList.remove("hidden")
+    label.classList.add("hidden")
+  })
+  img.src = "./caua.jpg"
+}
+
 function setupInstagramLinks() {
   document.querySelectorAll<HTMLAnchorElement>("[data-instagram]").forEach((link) => {
     link.href = INSTAGRAM_URL
@@ -285,6 +297,7 @@ function setupReveal() {
 setupIntro()
 setupDrawer()
 setupContact()
+setupPortrait()
 setupInstagramLinks()
 
 const spaceList = document.querySelector<HTMLElement>("#espacos-lista")
