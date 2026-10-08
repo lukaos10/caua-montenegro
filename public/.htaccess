@@ -1,5 +1,15 @@
 DirectoryIndex index.php index.html
 
+<IfModule LiteSpeed>
+RewriteEngine On
+RewriteCond %{HTTP_COOKIE} wordpress_logged_in [NC]
+RewriteRule .* - [E=Cache-Control:no-cache]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set Vary "Cookie"
+</IfModule>
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteRule ^$ index.php [L]

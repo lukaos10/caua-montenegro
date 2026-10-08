@@ -8,60 +8,64 @@ $html = is_file($htmlFile) ? (string) file_get_contents($htmlFile) : "";
 function caua_logged_in_cookie(): bool
 {
     foreach ($_COOKIE as $name => $value) {
-        if (strpos((string) $name, "wordpress_logged_in_") === 0) {
+        if (preg_match("/^wordpress_(?:logged_in|sec)_/", (string) $name) === 1) {
             return true;
         }
     }
     return false;
 }
 
-function caua_admin_bar_assets(): array
+function caua_admin_bar_markup(): string
 {
     global $wp_admin_bar;
 
-    if (!function_exists("is_user_logged_in") || !is_user_logged_in() || !function_exists("wp_admin_bar_render")) {
-        return ["", ""];
+    if (!function_exists("is_user_logged_in") || !is_user_logged_in()) {
+        return "";
     }
 
-    add_filter("show_admin_bar", "__return_true", 1000);
-    if (!is_object($wp_admin_bar) && function_exists("_wp_admin_bar_init")) {
-        _wp_admin_bar_init();
+    add_filter("show_admin_bar", "__return_true", PHP_INT_MAX);
+    if (function_exists("show_admin_bar")) {
+        show_admin_bar(true);
     }
+
     if (!is_object($wp_admin_bar)) {
-        return ["", ""];
+        if (!class_exists("WP_Admin_Bar")) {
+            require_once ABSPATH . WPINC . "/class-wp-admin-bar.php";
+        }
+        $wp_admin_bar = new WP_Admin_Bar();
+        $wp_admin_bar->initialize();
+        $wp_admin_bar->add_menus();
     }
 
-    $css = function_exists("includes_url") ? includes_url("css/admin-bar.min.css") : "";
-    $icons = function_exists("includes_url") ? includes_url("css/dashicons.min.css") : "";
-    $script = function_exists("includes_url") ? includes_url("js/admin-bar.min.js") : "";
-    $head = '<style>html{margin-top:32px!important}@media screen and (max-width:782px){html{margin-top:46px!important}}</style>';
-    if ($css !== "") {
-        $head .= '<link rel="stylesheet" href="' . esc_url($css) . '" />';
-    }
-    if ($icons !== "") {
-        $head .= '<link rel="stylesheet" href="' . esc_url($icons) . '" />';
+    if (!did_action("admin_bar_menu")) {
+        do_action_ref_array("admin_bar_menu", [&$wp_admin_bar]);
     }
 
     ob_start();
-    wp_admin_bar_render();
-    $bar = (string) ob_get_clean();
-    if ($script !== "") {
-        $bar .= '<script src="' . esc_url($script) . '"></script>';
-    }
-
-    return [$head, $bar];
+    $wp_admin_bar->render();
+    return (string) ob_get_clean();
 }
 
 $wp = __DIR__ . "/wp-load.php";
-if ($html !== "" && caua_logged_in_cookie() && is_file($wp)) {
+$loggedIn = caua_logged_in_cookie();
+if ($loggedIn) {
+    header("Cache-Control: private, no-store, no-cache, must-revalidate");
+    header("X-LiteSpeed-Cache-Control: no-cache");
+}
+header("Vary: Cookie");
+
+if ($html !== "" && $loggedIn && is_file($wp)) {
     try {
         require_once $wp;
-        [$head, $bar] = caua_admin_bar_assets();
+        $bar = caua_admin_bar_markup();
         if ($bar !== "") {
+            $head = '<link rel="stylesheet" href="/wp-includes/css/dashicons.min.css" />'
+                . '<link rel="stylesheet" href="/wp-includes/css/admin-bar.min.css" />'
+                . '<style>html{margin-top:32px!important}@media screen and (max-width:782px){html{margin-top:46px!important}}#wpadminbar{position:fixed!important;top:0;left:0;right:0;z-index:99999!important}.admin-bar header.navbar.sticky{top:32px}@media screen and (max-width:782px){.admin-bar header.navbar.sticky{top:46px}}</style>';
             $html = preg_replace("/\\boverflow-x-clip\\b\\s*/", "", $html, 2) ?? $html;
             $html = preg_replace("/<body([^>]*class=\")/", "<body$1admin-bar ", $html, 1) ?? $html;
             $html = str_replace("</head>", $head . "</head>", $html);
-            $html = str_replace("</body>", $bar . "</body>", $html);
+            $html = preg_replace("/<body([^>]*)>/", "<body$1>" . $bar, $html, 1) ?? $html;
         }
     } catch (Throwable $error) {
         // A página do Cauã continua no ar se a barra do WordPress falhar.
