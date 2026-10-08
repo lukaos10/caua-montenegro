@@ -8,7 +8,6 @@ import {
   WHATSAPP_E164,
   WHATSAPP_URL,
   type BriefingFields,
-  type Space,
 } from "./portfolio.ts"
 
 const cardClass = [
@@ -17,35 +16,96 @@ const cardClass = [
   "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-base-content",
 ].join(" ")
 
-function renderSpaces(list: HTMLElement) {
-  const fragment = document.createDocumentFragment()
+type Piece = { kind: "image" | "video" | "youtube" | "vimeo"; src: string; alt: string }
+type ViewSpace = {
+  id: string
+  title: string
+  summary: string
+  exemplo: boolean
+  cover: Piece | null
+  pieces: Piece[]
+}
 
-  for (const space of spaces) {
+function youtubeId(url: string) {
+  return url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{6,})/)?.[1] ?? ""
+}
+
+function vimeoId(url: string) {
+  return url.match(/vimeo\.com\/(?:video\/)?(\d+)/)?.[1] ?? ""
+}
+
+function mediaUrl(src: string) {
+  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("./")) return src
+  return `./${src.replace(/^\//, "")}`
+}
+
+function asPiece(src: string, kind: string, alt: string): Piece | null {
+  if (!src) return null
+  if (kind === "youtube" || youtubeId(src)) return { kind: "youtube", src, alt }
+  if (kind === "vimeo" || vimeoId(src)) return { kind: "vimeo", src, alt }
+  if (kind === "video" || /\.(mp4|webm|mov|m4v)(\?|$)/i.test(src)) return { kind: "video", src: mediaUrl(src), alt }
+  return { kind: "image", src: mediaUrl(src), alt }
+}
+
+function coverUrl(piece: Piece) {
+  if (piece.kind === "youtube") {
+    const id = youtubeId(piece.src)
+    return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : ""
+  }
+  if (piece.kind === "image") return piece.src
+  return ""
+}
+
+function renderSpaces(list: HTMLElement, view: ViewSpace[]) {
+  const fragment = document.createDocumentFragment()
+  const shortcuts = document.querySelector("#espacos-atalhos")
+  if (shortcuts) shortcuts.replaceChildren()
+
+  view.forEach((space, position) => {
+    if (shortcuts) {
+      const link = document.createElement("a")
+      link.className = "link link-hover"
+      link.href = `#espaco-${space.id}`
+      link.textContent = space.title
+      shortcuts.append(link)
+    }
+
     const button = document.createElement("button")
     button.type = "button"
     button.id = `espaco-${space.id}`
     button.className = `${cardClass} reveal`
     button.dataset.reveal = ""
-    button.dataset.revealDelay = String(spaces.indexOf(space))
+    button.dataset.revealDelay = String(position)
     button.addEventListener("click", () => openGallery(space))
 
-    const image = document.createElement("img")
-    image.src = space.images[0]?.src ?? ""
-    image.alt = ""
-    image.className =
-      "absolute inset-0 h-full w-full bg-base-300 object-cover transition duration-700 motion-safe:group-hover:scale-105"
-    image.decoding = "async"
+    if (space.cover?.kind === "video") {
+      const video = document.createElement("video")
+      video.src = space.cover.src
+      video.muted = true
+      video.playsInline = true
+      video.preload = "metadata"
+      video.className = "absolute inset-0 h-full w-full bg-base-300 object-cover"
+      button.append(video)
+    } else {
+      const image = document.createElement("img")
+      image.src = space.cover ? coverUrl(space.cover) : ""
+      image.alt = ""
+      image.className =
+        "absolute inset-0 h-full w-full bg-base-300 object-cover transition duration-700 motion-safe:group-hover:scale-105"
+      image.decoding = "async"
+      button.append(image)
+    }
 
     const shade = document.createElement("span")
     shade.className = "absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-black/10"
     shade.setAttribute("aria-hidden", "true")
 
     const copy = document.createElement("span")
-    copy.className = "absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 text-white"
+    copy.className = "absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 pr-16 text-white"
 
     const index = document.createElement("span")
     index.className = "text-xs tracking-[0.28em]"
-    index.textContent = space.index
+    index.textContent = String(position + 1).padStart(2, "0")
 
     const title = document.createElement("span")
     title.className = "text-4xl font-medium tracking-tight"
@@ -53,39 +113,64 @@ function renderSpaces(list: HTMLElement) {
 
     const hint = document.createElement("span")
     hint.className = "text-sm text-white/80"
-    hint.textContent = "Fotos fictícias. Espaço para os trabalhos do Cauã."
+    hint.textContent = space.exemplo
+      ? "Fotos fictícias. Espaço para os trabalhos do Cauã."
+      : "Toque para ver"
 
     copy.append(index, title, hint)
-    button.append(image, shade, copy)
+    button.append(shade, copy)
     fragment.append(button)
-  }
+  })
 
   list.replaceChildren(fragment)
 }
 
-function openGallery(space: Space) {
+function openGallery(space: ViewSpace) {
   const dialog = document.querySelector<HTMLDialogElement>("#galeria")
   const title = document.querySelector("#galeria-titulo")
   const summary = document.querySelector("#galeria-texto")
+  const note = document.querySelector("#galeria-nota")
   const grid = document.querySelector("#galeria-grid")
   const box = dialog?.querySelector(".modal-box")
   if (!dialog || !title || !summary || !grid) return
 
   title.textContent = space.title
   summary.textContent = space.summary
+  if (note) {
+    note.textContent = space.exemplo
+      ? "Fotos fictícias. Este espaço fica para as fotos dos trabalhos do Cauã."
+      : "Fotos e vídeos deste espaço."
+  }
   grid.replaceChildren()
 
-  space.images.forEach((image, index) => {
+  space.pieces.forEach((piece, index) => {
     const figure = document.createElement("figure")
     figure.className = "reveal overflow-hidden rounded-box bg-base-300"
     figure.style.transitionDelay = `${index * 70}ms`
-    const img = document.createElement("img")
-    img.src = image.src
-    img.alt = image.alt
-    img.loading = "lazy"
-    img.decoding = "async"
-    img.className = "aspect-3/4 w-full object-cover"
-    figure.append(img)
+    if (piece.kind === "youtube" || piece.kind === "vimeo") {
+      const frame = document.createElement("iframe")
+      const id = piece.kind === "youtube" ? youtubeId(piece.src) : vimeoId(piece.src)
+      frame.src = piece.kind === "youtube" ? `https://www.youtube.com/embed/${id}` : `https://player.vimeo.com/video/${id}`
+      frame.title = piece.alt
+      frame.allowFullscreen = true
+      frame.className = "aspect-video w-full"
+      figure.append(frame)
+    } else if (piece.kind === "video") {
+      const video = document.createElement("video")
+      video.src = piece.src
+      video.controls = true
+      video.playsInline = true
+      video.className = "aspect-video w-full bg-base-300"
+      figure.append(video)
+    } else {
+      const img = document.createElement("img")
+      img.src = piece.src
+      img.alt = piece.alt
+      img.loading = "lazy"
+      img.decoding = "async"
+      img.className = "aspect-3/4 w-full object-cover"
+      figure.append(img)
+    }
     grid.append(figure)
   })
 
@@ -294,6 +379,84 @@ function setupReveal() {
   document.addEventListener("intro:done", start, { once: true })
 }
 
+function fallbackSpaces(): ViewSpace[] {
+  return spaces.map((space) => {
+    const pieces = space.images
+      .map((image) => asPiece(image.src, "image", image.alt))
+      .filter((piece): piece is Piece => piece !== null)
+    return {
+      id: space.id,
+      title: space.title,
+      summary: space.summary,
+      exemplo: true,
+      cover: pieces[0] ?? null,
+      pieces,
+    }
+  })
+}
+
+function publishedSpaces(payload: unknown): ViewSpace[] | null {
+  if (!payload || typeof payload !== "object" || !("spaces" in payload) || !Array.isArray(payload.spaces)) return null
+  const view = payload.spaces.flatMap((item): ViewSpace[] => {
+    if (!item || typeof item !== "object") return []
+    const record = item as Record<string, unknown>
+    const title = typeof record.title === "string" ? record.title : ""
+    const id = typeof record.id === "string" ? record.id : ""
+    if (!title || !id) return []
+    const banner = record.banner && typeof record.banner === "object" ? (record.banner as Record<string, unknown>) : {}
+    const photos = Array.isArray(record.photos) ? record.photos : []
+    const videos = Array.isArray(record.videos) ? record.videos : []
+    const pieces = [
+      ...photos.flatMap((photo) => {
+        const src = photo && typeof photo === "object" && "src" in photo ? String(photo.src) : ""
+        const piece = asPiece(src, "image", title)
+        return piece ? [piece] : []
+      }),
+      ...videos.flatMap((video) => {
+        if (!video || typeof video !== "object" || !("src" in video)) return []
+        const src = String(video.src)
+        const kind = "kind" in video ? String(video.kind) : ""
+        const piece = asPiece(src, kind, title)
+        return piece ? [piece] : []
+      }),
+    ]
+    const cover = asPiece(typeof banner.src === "string" ? banner.src : "", typeof banner.kind === "string" ? banner.kind : "", title) ?? pieces[0] ?? null
+    if (cover && !pieces.some((piece) => piece.src === cover.src)) pieces.unshift(cover)
+    if (!cover && pieces.length === 0) return []
+    return [{
+      id,
+      title,
+      summary: "Fotos e vídeos deste espaço.",
+      exemplo: record.exemplo === true,
+      cover,
+      pieces: pieces.length > 0 ? pieces : cover ? [cover] : [],
+    }]
+  })
+  return view.length > 0 ? view : null
+}
+
+async function loadPublishedSpaces() {
+  for (const path of ["./conteudo/espacos.json", "./conteudo/espacos.exemplo.json"]) {
+    try {
+      const response = await fetch(path)
+      if (!response.ok) continue
+      const view = publishedSpaces(await response.json())
+      if (view) return view
+    } catch {
+      /* o site segue com os espaços de exemplo */
+    }
+  }
+  return fallbackSpaces()
+}
+
+function applySpaceNotes(view: ViewSpace[]) {
+  const exemplo = view.every((space) => space.exemplo)
+  const note = document.querySelector("#espacos-nota")
+  if (note && !exemplo) {
+    note.textContent = "Toque em um espaço para ver as fotos e os vídeos dos trabalhos do Cauã."
+  }
+}
+
 setupIntro()
 setupDrawer()
 setupContact()
@@ -301,5 +464,14 @@ setupPortrait()
 setupInstagramLinks()
 
 const spaceList = document.querySelector<HTMLElement>("#espacos-lista")
-if (spaceList) renderSpaces(spaceList)
+if (spaceList) renderSpaces(spaceList, fallbackSpaces())
 setupReveal()
+
+void loadPublishedSpaces().then((view) => {
+  if (!spaceList) return
+  renderSpaces(spaceList, view)
+  applySpaceNotes(view)
+  spaceList.querySelectorAll<HTMLElement>("[data-reveal]").forEach((item) => {
+    item.dataset.revealed = "true"
+  })
+})
