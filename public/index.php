@@ -15,6 +15,38 @@ function caua_logged_in_cookie(): bool
     return false;
 }
 
+function caua_esc(string $value): string
+{
+    if (function_exists("esc_html")) {
+        return esc_html($value);
+    }
+    return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+}
+
+function caua_simple_bar(): string
+{
+    $user = function_exists("wp_get_current_user") ? wp_get_current_user() : null;
+    $name = $user ? (string) ($user->display_name ?: $user->user_login) : "";
+    $blog = function_exists("get_bloginfo") ? (string) get_bloginfo("name") : "Cauã Montenegro";
+    $admin = function_exists("admin_url") ? admin_url() : "/wp-admin/";
+    $home = function_exists("home_url") ? home_url("/") : "/";
+    $logout = function_exists("wp_logout_url") ? wp_logout_url($home) : "/wp-login.php?action=logout";
+    $profile = function_exists("admin_url") ? admin_url("profile.php") : "/wp-admin/profile.php";
+    $newPost = function_exists("admin_url") ? admin_url("post-new.php") : "/wp-admin/post-new.php";
+
+    return '<div id="wpadminbar" class="nojq"><div class="quicklinks" id="wp-toolbar" role="navigation" aria-label="Barra de ferramentas">'
+        . '<ul role="menu" id="wp-admin-bar-root-default" class="ab-top-menu">'
+        . '<li role="group" id="wp-admin-bar-wp-logo"><a class="ab-item" role="menuitem" href="' . caua_esc($admin) . '"><span class="ab-icon" aria-hidden="true"></span><span class="screen-reader-text">WordPress</span></a></li>'
+        . '<li role="group" id="wp-admin-bar-site-name"><a class="ab-item" role="menuitem" href="' . caua_esc($admin) . '">' . caua_esc($blog) . '</a></li>'
+        . '<li role="group" id="wp-admin-bar-view-site"><a class="ab-item" role="menuitem" href="' . caua_esc($home) . '">Ver site</a></li>'
+        . '<li role="group" id="wp-admin-bar-new-content"><a class="ab-item" role="menuitem" href="' . caua_esc($newPost) . '"><span class="ab-icon" aria-hidden="true"></span><span class="ab-label">Novo</span></a></li>'
+        . '</ul>'
+        . '<ul role="menu" id="wp-admin-bar-top-secondary" class="ab-top-secondary">'
+        . '<li role="group" id="wp-admin-bar-my-account"><a class="ab-item" role="menuitem" href="' . caua_esc($profile) . '">Olá, ' . caua_esc($name) . '</a></li>'
+        . '<li role="group" id="wp-admin-bar-logout"><a class="ab-item" role="menuitem" href="' . caua_esc($logout) . '">Sair</a></li>'
+        . '</ul></div></div>';
+}
+
 function caua_admin_bar_markup(): string
 {
     global $wp_admin_bar;
@@ -57,7 +89,15 @@ header("Vary: Cookie");
 if ($html !== "" && $loggedIn && is_file($wp)) {
     try {
         require_once $wp;
-        $bar = caua_admin_bar_markup();
+        $bar = "";
+        try {
+            $bar = caua_admin_bar_markup();
+        } catch (Throwable $error) {
+            $bar = "";
+        }
+        if (strpos($bar, "wpadminbar") === false && function_exists("is_user_logged_in") && is_user_logged_in()) {
+            $bar = caua_simple_bar();
+        }
         if ($bar !== "") {
             $head = '<link rel="stylesheet" href="/wp-includes/css/dashicons.min.css" />'
                 . '<link rel="stylesheet" href="/wp-includes/css/admin-bar.min.css" />'
